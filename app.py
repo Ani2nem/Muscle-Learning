@@ -11,7 +11,7 @@ class App:
 
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title = "Biceps: Rep Counter"
+        self.window.title("Biceps: Rep Counter")
 
         self.counters = [1, 1]
         self.rep_counter = 0
@@ -35,7 +35,6 @@ class App:
         self.window.mainloop()
 
     def init_gui(self):
-
         self.btn_toggleauto = tk.Button(self.window, text="Toggle Counting",
                                         width=50, command=self.counting_toggle)
         self.btn_toggleauto.pack(anchor=tk.CENTER, expand=True)
@@ -50,7 +49,7 @@ class App:
         self.btn_class_two.pack(anchor=tk.CENTER, expand=True)
 
         self.btn_train = tk.Button(self.window, text="Train Model",
-                                   width=50, command=lambda:
+                                   width=50, command=lambda: 
                                    self.model.train_model(self.counters))
         self.btn_train.pack(anchor=tk.CENTER, expand=True)
 
@@ -62,7 +61,7 @@ class App:
                                 height=self.camera.height)
 
         self.counter_label = tk.Label(self.window, text=f"{self.rep_counter}")
-        self.counter_label.config(font={"Arial", 24})
+        self.counter_label.config(font=("Arial", 24))
         self.counter_label.pack(anchor=tk.CENTER, expand=True)
 
         self.canvas.pack()
@@ -79,8 +78,8 @@ class App:
 
         ret, frame = self.camera.get_frame()
         if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image
-                                                .fromarray(frame))
+            self.photo = PIL.ImageTk.PhotoImage(
+                image=PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
 
         self.window.after(self.delay, self.update)
@@ -111,11 +110,10 @@ class App:
                     cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY))
         img = PIL.Image.open(
             f"{class_num}/frame{self.counters[class_num - 1]}.jpg")
-        img.resize((150, 150))
-        # img.thumbnail((150, 150), PIL.Image.ANTIALIAS)
+        img = img.resize((150, 150))
         img.save(f"{class_num}/frame{self.counters[class_num - 1]}.jpg")
 
-        self.counters[class_num-1] += 1
+        self.counters[class_num - 1] += 1
 
     def reset(self):
         self.rep_counter = 0
